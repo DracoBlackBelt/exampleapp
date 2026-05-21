@@ -13,9 +13,8 @@ SystrayIcon {
             app.exampleScreen.show()
     }
 
-    // TODO: add an icon image here, e.g.:
-    // Image {
-    //     anchors.centerIn: parent
-    //     source: "qrc:/tsc/ExampleTray.png"
-    // }
+    Image {
+        anchors.centerIn: parent
+        source: "qrc:/tsc/BalloonIcon.png"
+    }
 }
