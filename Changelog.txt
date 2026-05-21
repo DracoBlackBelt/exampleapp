@@ -1,2 +1,2 @@
 1.0.0
-- Initial scaffold: tile, screen, menu, tray
+- Initial scaffold: ExampleApp, ExampleTile, ExampleScreen, ExampleMenu, ExampleTray
