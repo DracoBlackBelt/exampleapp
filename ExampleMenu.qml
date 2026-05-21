@@ -6,9 +6,9 @@ MenuItem {
     property ExampleApp app
 
     label: "Example"
+    // weight is set via registry.registerWidget options in ExampleApp.qml
     // TODO: set image to your app thumbnail, e.g.:
     // image: "qrc:/tsc/ExampleThumb.png"
-    weight: 200
 
     onClicked: {
         if (app && app.exampleScreen)

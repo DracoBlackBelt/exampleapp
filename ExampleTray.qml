@@ -9,7 +9,7 @@ SystrayIcon {
     property string objectName: "exampleSystrayIcon"
 
     onClicked: {
-        if (app.exampleScreen)
+        if (app && app.exampleScreen)
             app.exampleScreen.show()
     }
 

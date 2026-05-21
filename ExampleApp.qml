@@ -9,6 +9,7 @@ App {
     property url tileUrl:      "ExampleTile.qml"
     property url menuUrl:      "ExampleMenu.qml"
     property url trayUrl:      "ExampleTray.qml"
+    property url screenUrl:    "ExampleScreen.qml"
     property url thumbnailIcon: "qrc:/tsc/ExampleThumb.png"
     // TODO: replace with actual resource, or use a drawables/ path during development:
     // property url thumbnailIcon: "drawables/example_thumb.png"
@@ -27,7 +28,7 @@ App {
             baseTileWeight: 10,
             thumbIconVAlignment: "center"
         })
-        registry.registerWidget("screen", Qt.resolvedUrl("ExampleScreen.qml"), this, "exampleScreen")
+        registry.registerWidget("screen", Qt.resolvedUrl(screenUrl), this, "exampleScreen")
         registry.registerWidget("menuItem", menuUrl, this, "exampleMenu", {weight: 200})
         registry.registerWidget("systrayIcon", trayUrl, this, "exampleTray")
     }

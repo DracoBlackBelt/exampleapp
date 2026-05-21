@@ -5,7 +5,7 @@ Tile {
     id: exampleTile
 
     onClicked: {
-        if (app.exampleScreen)
+        if (app && app.exampleScreen)
             app.exampleScreen.show()
     }
 
