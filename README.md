@@ -14,7 +14,7 @@ A minimal QML scaffold for the **Toon smart thermostat** (Quby/Eneco). Use this 
 | `qmldir` | Module declaration (`apps.example`) |
 | `drawables/` | Place your image assets here |
 | `lang/` | Place `.qm` translation files here |
-| `AGENTS.md` | Canonical instructions for AI coding agents (`CLAUDE.md` points at it) |
+| `AGENTS.md` | Canonical instructions for AI coding agents |
 
 ## How to use
 
