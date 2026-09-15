@@ -93,7 +93,7 @@ Tile {
     id: exampleTile
 
     onClicked: {
-        if (app.exampleScreen)
+        if (app && app.exampleScreen)
             app.exampleScreen.show()
     }
 
@@ -184,9 +184,9 @@ MenuItem {
     property ExampleApp app
 
     label: "Example"
+    // weight is set via registry.registerWidget options in ExampleApp.qml
     // TODO: set image to your app thumbnail, e.g.:
     // image: "qrc:/tsc/ExampleThumb.png"
-    weight: 200
 
     onClicked: {
         if (app && app.exampleScreen)
@@ -204,7 +204,7 @@ Run:
 cat /home/job/Toon/example/ExampleMenu.qml
 ```
 
-Confirm: `MenuItem` root item, `label` set, `onClicked` opens screen, `weight` set.
+Confirm: `MenuItem` root item, `label` set, `onClicked` opens screen, weight passed via registration options.
 
 - [ ] **Step 3: Commit**
 
@@ -234,15 +234,14 @@ SystrayIcon {
     property string objectName: "exampleSystrayIcon"
 
     onClicked: {
-        if (app.exampleScreen)
+        if (app && app.exampleScreen)
             app.exampleScreen.show()
     }
 
-    // TODO: add an icon image here, e.g.:
-    // Image {
-    //     anchors.centerIn: parent
-    //     source: "qrc:/tsc/ExampleTray.png"
-    // }
+    Image {
+        anchors.centerIn: parent
+        source: "qrc:/tsc/BalloonIcon.png"   // TODO: replace with your own tray icon
+    }
 }
 ```
 
@@ -255,7 +254,7 @@ Run:
 cat /home/job/Toon/example/ExampleTray.qml
 ```
 
-Confirm: `SystrayIcon` root item, `objectName` set, `onClicked` opens screen, image stub comment present.
+Confirm: `SystrayIcon` root item, `objectName` set, `onClicked` opens screen, `Image` with a `qrc:` source present.
 
 - [ ] **Step 3: Commit**
 
@@ -280,31 +279,37 @@ import qb.base 1.0
 
 App {
     id: root
+    objectName: "ExampleApp"
 
     property url tileUrl:      "ExampleTile.qml"
     property url menuUrl:      "ExampleMenu.qml"
     property url trayUrl:      "ExampleTray.qml"
-    // TODO: replace with your actual thumbnail resource:
-    // property url thumbnailIcon: "qrc:/tsc/ExampleThumb.png"
-    property url thumbnailIcon: "drawables/example_thumb.png"
+    property url screenUrl:    "ExampleScreen.qml"
+    property url thumbnailIcon: "qrc:/tsc/ExampleThumb.png"
+    // TODO: replace with actual resource, or use a drawables/ path during development:
+    // property url thumbnailIcon: "drawables/example_thumb.png"
 
     property ExampleScreen exampleScreen
 
     // TODO: add state properties here, e.g.:
     // property string someValue: ""
 
-    Component.onCompleted: {
+    function init() {
         registry.registerWidget("tile", tileUrl, this, null, {
-            thumbLabel: "Example",
+            thumbLabel: qsTr("Example"),
             thumbIcon: thumbnailIcon,
             thumbCategory: "general",
             thumbWeight: 30,
             baseTileWeight: 10,
             thumbIconVAlignment: "center"
         })
-        registry.registerWidget("screen", Qt.resolvedUrl("ExampleScreen.qml"), this, "exampleScreen")
+        registry.registerWidget("screen", Qt.resolvedUrl(screenUrl), this, "exampleScreen")
         registry.registerWidget("menuItem", menuUrl, this, "exampleMenu", {weight: 200})
         registry.registerWidget("systrayIcon", trayUrl, this, "exampleTray")
+    }
+
+    Component.onCompleted: {
+        // TODO: read persisted settings here, e.g. via FileIO
     }
 
     // TODO: add timers here, e.g.:
@@ -318,8 +323,9 @@ App {
     // TODO: add functions here, e.g.:
     // function fetchData() { ... }
 
-    // TODO: persist settings via XMLHttpRequest PUT to:
+    // TODO: persist settings — add "import FileIO 1.0" then read/write JSON to:
     // /mnt/data/tsc/example.userSettings.json
+    // (FileIO for reading, XMLHttpRequest PUT for writing — see SonosApp.qml)
 }
 ```
 
@@ -353,46 +359,20 @@ git commit -m "feat: add ExampleApp root with full Toon registry wiring"
 
 ---
 
-### Task 7: Final check and CLAUDE.md
+### Task 7: Final check and agent docs
 
 **Files:**
+- Create: `example/AGENTS.md`
 - Create: `example/CLAUDE.md`
 
-- [ ] **Step 1: Create `CLAUDE.md`**
+- [ ] **Step 1: Create `AGENTS.md`** with the canonical /init-style instructions (what this is, deploy command, architecture table, conventions, versioning), and a `CLAUDE.md` that only points at it:
 
 ```markdown
 # CLAUDE.md
 
-This file provides guidance to Claude Code when working with code in this repository.
+Canonical instructions live in [AGENTS.md](AGENTS.md).
 
-## What this is
-
-A minimal QML scaffold for the **Toon smart thermostat** (Quby/Eneco). Copy this project as a starting point for a new Toon app. There is no build step — files are deployed directly to the Toon device.
-
-## Architecture
-
-`ExampleApp.qml` is the central `App` object. It registers all widgets with the Toon `registry` in `Component.onCompleted`. Rename `Example` → your app name throughout all files when starting a new app.
-
-### Key files
-
-| File | Purpose |
-|---|---|
-| `ExampleApp.qml` | App root: state, timers, API functions, settings I/O |
-| `ExampleTile.qml` | Home screen tile — shows "test", click opens screen |
-| `ExampleScreen.qml` | Detail screen stub |
-| `ExampleMenu.qml` | Menu entry stub |
-| `ExampleTray.qml` | System tray icon stub |
-
-## Conventions
-
-- `isNxt` is a Toon-provided boolean: `true` for Toon 2 (higher resolution). Always use it for sizing — never hardcode one size for both devices.
-- Module name is `apps.example` — change to `apps.<yourapp>` in `qmldir`.
-- Settings are persisted via XMLHttpRequest PUT to `/mnt/data/tsc/example.userSettings.json`.
-- Colors: use `dimmableColors.clockTileColor` when available (dim mode), fall back to `colors.clockTileColor`.
-
-## Versioning
-
-Update `version.txt` and prepend a block to `Changelog.txt` on every release.
+@AGENTS.md
 ```
 
 Save to `example/CLAUDE.md`.

@@ -25,7 +25,7 @@ example/
 
 ## Architecture
 
-`ExampleApp.qml` is the central `App` object. It owns all URL properties pointing at the other QML files, typed screen properties, and registers every widget with the Toon `registry` in `Component.onCompleted`. It has `// TODO` stubs for state properties, timers, and API functions.
+`ExampleApp.qml` is the central `App` object. It owns all URL properties pointing at the other QML files, typed screen properties, and registers every widget with the Toon `registry` in `function init()` (called by the `App` base type — NOT in `Component.onCompleted`, which is reserved for a settings-read stub). It has `// TODO` stubs for state properties, timers, and API functions.
 
 The module is `apps.example`. `qmldir` exports `ExampleApp` and `ExampleScreen`.
 
@@ -33,8 +33,9 @@ The module is `apps.example`. `qmldir` exports `ExampleApp` and `ExampleScreen`.
 
 ### ExampleApp.qml
 - Extends `App`
-- Properties: `tileUrl`, `menuUrl`, `trayUrl`, `thumbnailIcon`, screen URL + typed properties
-- `Component.onCompleted`: registers tile, screen, menu, tray via `registry`
+- Properties: `tileUrl`, `menuUrl`, `trayUrl`, `screenUrl`, `thumbnailIcon` (`qrc:/tsc/ExampleThumb.png`, with a commented-out `drawables/` alternative for development), typed screen property
+- `function init()`: registers tile, screen, menu, tray via `registry`
+- `Component.onCompleted`: settings-read stub comment only
 - Stub comments: state properties, timers, helper functions, settings read/write
 
 ### ExampleTile.qml

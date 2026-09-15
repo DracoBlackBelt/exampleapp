@@ -14,10 +14,11 @@ A minimal QML scaffold for the **Toon smart thermostat** (Quby/Eneco). Use this 
 | `qmldir` | Module declaration (`apps.example`) |
 | `drawables/` | Place your image assets here |
 | `lang/` | Place `.qm` translation files here |
+| `AGENTS.md` | Canonical instructions for AI coding agents (`CLAUDE.md` points at it) |
 
 ## How to use
 
-1. Copy this repository.
+1. Copy this project.
 2. Rename every occurrence of `Example` / `example` to your app name — in file names, QML type names, `qmldir`, and the settings path in `ExampleApp.qml`.
 3. Deploy the QML files to the Toon device (no build step required).
 4. Restart the Toon GUI or reload the app.
